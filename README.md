@@ -1,4 +1,4 @@
-# 前端分页
+# 表格合并
 
 > vue+elementUI 中的 Table 表格的合并功能，可配置，使用方便。
 
@@ -23,8 +23,8 @@ npm run build --report
 <!-- [24K 博客](https://libing.art/2019/09/16/qian-duan-fen-ye/) -->
 ### 1、合并前后效果图
 
-[合并前]()
-[合并后]()
+![合并前](https://github.com/libing-cheer/merge-table/blob/master/src/assets/beforeMerge.png)
+![合并后](https://github.com/libing-cheer/merge-table/blob/master/src/assets/afterMerge.png)
 
 ### 2、代码实现
 
