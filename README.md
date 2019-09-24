@@ -1,6 +1,6 @@
 # 前端分页
 
-> 前端分页 在数据量小的情况下，前端分页更好一点。这是一个前端分页的小例子。
+> vue+elementUI 中的 Table 表格的合并功能，可配置，使用方便。
 
 ## Build Setup
 
@@ -20,235 +20,328 @@ npm run build --report
 
 ## 详细步骤请前往
 
-[24K 博客](https://libing.art/2019/09/16/qian-duan-fen-ye/)
+<!-- [24K 博客](https://libing.art/2019/09/16/qian-duan-fen-ye/) -->
+### 1、合并前后效果图
 
-### 1、适合情形
+[合并前]()
+[合并后]()
 
-前端分页一般用于数据量较小的情况，一次请求把数据全部从后端请求回来。
+### 2、代码实现
 
-### 2、实现关键
-
-使用计算属性对获取的数据进行处理，即`computed`中`frontEndPageChange`方法。`el-table`中的`:data`绑定`frontEndPageChange`。
-
-```javascript
-<el-table
-  :data="frontEndPageChange"
-  stripe
-  style="width: 1000px;margin:30px auto;"
-  height="550"
->
-</el-table>
-
-computed: {
-// 计算属性对数据进行处理
-frontEndPageChange() {
-  const start = (this.paginationOptions.currentPage - 1) * this.paginationOptions.pageSize;
-  const end = this.paginationOptions.currentPage * this.paginationOptions.pageSize;
-  return this.tableData.slice(start, end);
-}
-```
-
-### 3、`vue` 文件完整代码
-
-```javascript
+```html
 <template>
   <div class="hello">
     {{msg}}
     <div>
       <el-table
-        :data="frontEndPageChange"
-        stripe
+        :data="tableData"
+        :span-method="arraySpanMethod"
+        border
         style="width: 1000px;margin:30px auto;"
         height="550"
       >
         <el-table-column
-          prop="date"
-          label="日期"
-          width="100"
+          v-for="(item, index) in tableTitleData"
+          :key="index"
+          :prop="item.prop"
+          :label="item.label"
+          :min-width="item.minWidth"
         >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="100"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址"
-          width="190"
-        >
-        </el-table-column>
-
-        <el-table-column
-          label="个人信息"
-          width="180"
-          align="center"
-        >
-          <el-table-column
-            prop="age"
-            label="年龄"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="height"
-            label="身高"
-            align="center"
-          >
-          </el-table-column>
+          <template slot-scope="scope">
+            <span>{{scope.row[item.prop]}}</span>
+          </template>
         </el-table-column>
       </el-table>
-    </div>
-    <div>
-      <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handlePageChange"
-            class="z-pagination"
-            :current-page="paginationOptions.currentPage"
-            :page-size="paginationOptions.pageSize"
-            :page-sizes="paginationOptions.pageSizes"
-            layout="sizes, prev, pager, next, jumper,total"
-            :total="tableData.length">
-      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-// 数据来源
-import { tableData } from './js/options';
-export default {
-  name: 'frontEndPage',
-  data() {
-    return {
-      msg: '前端分页',
-      paginationOptions: {
-        currentPage: 1, // 当前页
-        pageSize: 10, // 展示页数
-        pageSizes: [10, 20, 30, 40] // 可选择展示页数 数组
-      },
-      tableData,
-    }
-  },
-  computed: {
-    // 计算属性对数据进行处理
-    frontEndPageChange() {
-      const start = (this.paginationOptions.currentPage - 1) * this.paginationOptions.pageSize;
-      const end = this.paginationOptions.currentPage * this.paginationOptions.pageSize;
-      return this.tableData.slice(start, end);
-    }
-  },
-  methods: {
-    // 改变分页数量
-    handleSizeChange(val) {
-      this.paginationOptions.pageSize = val;
+  import { tableTitleData, tableData } from './js/options';
+  export default {
+    name: 'mergeTable',
+    data() {
+      return {
+        msg: '表格合并',
+        paginationOptions: {
+          currentPage: 1, // 当前页
+          pageSize: 10, // 展示页数
+          pageSizes: [10, 20, 30, 40] // 可选择展示页数 数组
+        },
+        tableData,
+        tableTitleData
+      };
     },
-    // 改变当前页
-    handlePageChange(val) {
-      this.paginationOptions.currentPage = val;
+    methods: {
+      // ====================================== 合并多列单元格逻辑
+      arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+        // 合并单元格
+        /**
+         * desc 该方法会触发n次，n是表格data的length*表头data的length;
+         * @param  {String} row         [ 当前遍历到的行数据 (后台接口返回的) ]
+         * @param  {Object} column      [ 当前遍历到的列数据 (elemen表格对象内置的) ]
+         * @param  {Number} rowIndex    [ 当前遍历到的行下标 ]
+         * @param  {Number} columnIndex [ 当前遍历到的列下标 ]
+         * @return {Object} 包含合并的行和列信息
+         */
+        //  ================================================================ 分割线
+        if (!(this.realTitleData || []).length) {
+          this.realTitleData = []; // 这个数组是带children的表头data展开children后的数组
+          this.tableTitleData.forEach(val => {
+            // 展开存在children的titleData
+            if (val.children && (val.children || []).length) {
+              val.children.forEach(child => {
+                this.realTitleData.push(child);
+              });
+            } else {
+              this.realTitleData.push(val);
+            }
+          });
+        }
+        if (!(this.mergeTabelArr || []).length) {
+          // 只运行一次，获得要合并的信息数组
+          const keywords = ['areaName']; // (这个数组要根据不同表格来配置!!!) 一些prop名的集合，这些porp名代表的字段 在每个做过合并的行数据集合里 它的的值 都是唯一的（比如区域、片区、中心名称之类的）。这个集合用于确保合并信息的唯一性，确保表格不会错乱
+          this.mergeTabelArr = this.getMergeTabelArr(
+            this.tableData,
+            this.realTitleData,
+            keywords,
+            [0, 1]
+          );
+          // console.log('完整的合并表格的信息集合', this.mergeTabelArr);
+        }
+        // if (columnIndex > 0) { // 除掉序号那一列(这里用于自定义过滤某列)，都要合并
+        const _rowArr = (
+          this.mergeTabelArr.find(n => n.key === column.property) || {}
+        ).connect; // connect数组
+        if (_rowArr) {
+          const _row = _rowArr[rowIndex];
+          return {
+            rowspan: _row, // 0代表删除这列，1代表展示这列，>1代表合并列
+            colspan: _row > 0 ? 1 : 0 // 0代表删除这列，1代表展示这列，>1代表合并列
+          };
+        }
+        // }
+      },
+      getMergeTabelArr(
+        data = [],
+        titleData = [],
+        keywords = [],
+        colIndexs = []
+      ) {
+        // 获取合并表格的信息集合
+        /**
+         * desc 该方法为最终组合‘合并表格的信息集合’的方法
+         * @param  {Array}  data                   [ 表格的data ]
+         * @param  {Array}  titleData              [ 表格的表头的data ]
+         * @param  {Array}  keywords  ['1','a'...] [ 一些prop名的集合，这些porp名代表的字段 在每个做过合并的行数据集合里 它的的值 都是唯一的（比如区域、片区、中心名称之类的）。这个集合用于确保合并信息的唯一性，确保表格不会错乱 ]
+         * @param  {Array}  colIndexs [0,1,-2,...] [ 合并规则数组，这个数组里所有的负数值代表不合并的列的下标，正数代表合并的列的下标 ]
+         * @return {Array} arr  示例:
+         * [
+         *   {
+         *     key: 'nextSite', // 对应列的prop名
+         *     connect: [2, 0, 2, 0, 1]  // connect数组
+         *   },
+         *   ...
+         * ];
+         */
+        //  ================================================================ 分割线
+
+        const columnArr = colIndexs.length
+          ? titleData.filter((n, i) => {
+              const index = colIndexs.findIndex(realV => {
+                if (realV < 0) return false;
+                const v = Math.abs(realV);
+                return i === v;
+              });
+              return index !== -1;
+            })
+          : []; // 按传递进来的规则过滤
+
+        this.oldMergeTabel = []; // 给this添加oldMergeTabel属性，防止后面报错
+        const arr = columnArr.map(v1 => {
+          const obj = this.getConnectArr(
+            data,
+            v1.prop,
+            keywords,
+            this.oldMergeTabel
+          );
+          this.oldMergeTabel = obj.connect; // 保存前一条的connect数组信息
+          return obj;
+        });
+        return arr;
+      },
+      getConnectArr(data, key, keywords, oldMergeTabel) {
+        // 获取connect数组
+        /**
+         * desc 该方法会触发n次，n是过滤后的，要合并的表头data的length;
+         * @param  {Array}  data          [ 表格的data数据 ]
+         * @param  {String} key           [ 要合并的表头的prop名 ]
+         * @param  {Array}  keywords      [ 一些prop名的集合，这些porp名代表的字段 在每个做过合并的行数据集合里 它的的值 都是唯一的（比如区域、片区、中心名称之类的）。这个集合用于确保合并信息的唯一性，确保表格不会错乱 ]
+         * @param  {Object} oldMergeTabel [ 前一条组合好的connect数组信息,用于确保表格不会错乱 ]
+         * @return {Object} 包含合并的行和列信息（其实就是 ‘合并表格的信息数组’ 的一个成员，看上面getMergeTabelArr方法的示例）
+         */
+        //  ================================================================ 分割线
+
+        const oldArr = []; // 保存上一个数组
+        let oldObj = {}; // 控制只跟上一个元素做对比,不跟整个数组对比
+
+        // 正确的代码
+        data.forEach((v, i) => {
+          let newObj;
+          let newKey = ''; // 保证唯一性的key
+          keywords.forEach(k => {
+            newKey += `${v[k]}-`;
+          });
+          newKey += v[key];
+
+          const oldIndex = oldArr.findIndex(n => n.key === newKey); // 保存的数组里是否存在与当前表头数据一样的元素（注意，findIndex找到的是第一个匹配的元素的下标）
+          if (oldIndex !== -1 && oldObj.key === newKey) {
+            newObj = {
+              key: newKey,
+              value: 0
+            };
+            oldArr[oldIndex].value++; // 找到重复项的第一项，值加1
+          } else {
+            newObj = {
+              key: newKey,
+              value: 1
+            };
+          }
+          oldArr.push(newObj);
+          oldObj = newObj; // 保存当前数据，用作与下一条数据的对比，看是否相同，相同把下一条数据的占用列置成0，这样表格不会错乱
+        });
+        const connect = oldArr.map(n => n.value);
+
+        if (oldMergeTabel.length) {
+          // 控制数组合并。如果有重复项也不能跨越过上一条的合并行
+          oldMergeTabel.forEach((oldVal, i) => {
+            const newVal = connect[i]; // 新值
+            let count = 0; // connect数组各项值的和,
+            const rule1 = newVal > oldVal && oldVal > 0;
+            const rule2 = newVal < oldVal && newVal === 0;
+            if (rule1 || rule2) {
+              connect[i] = oldVal;
+              connect.forEach(v => {
+                count += v;
+              }); // 赋值后计算connect数组各项值的和
+              if (count > data.length) {
+                // connect数组各项值加起来不能超过表格数据data的length,（可能有bug，以后再解决吧，哈哈哈）
+                connect[i] = count - data.length;
+              }
+            }
+          });
+        }
+        return {
+          key: key,
+          connect: connect
+        };
+      },
+      // 查询数据
+      queryData() {
+        // 在工作中，一般是要调接口去查询数据，在查询之前，需要将mergeTabelArr置为空数组，然后在执行之后的操作。
+        this.mergeTabelArr = [];
+        // ...
+      }
     }
-  }
-}
+  };
 </script>
+<style>
+  .tableHeader {
+    background: red !important;
+  }
+</style>
 ```
 
-### 4、`options.js` 数据来源文件
+### 3、`options.js` 数据来源文件
 
 ```javascript
 /**
  * 表头配置
  */
-
-const tableData = [
+const tableTitleData = [
   {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'areaName',
+    label: '片区'
   },
   {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'managementAreaName',
+    label: '管理区'
   },
   {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '陈小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '吴小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '徐小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '黄小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '秦小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'centerName',
+    label: '中心名称'
   }
 ];
-export { tableData };
+// 模拟数据
+const tableData = [
+  {
+    areaName: '东北',
+    managementAreaName: '黑龙江',
+    centerName: '哈尔滨转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '黑龙江',
+    centerName: '黑龙江转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第一转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第二转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第三转运中心'
+  },
+  {
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '上海转运中心'
+  },
+  {
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '上海浦东中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '广东',
+    centerName: '东莞转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '广东',
+    centerName: '东莞转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第一转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第二转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第三转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '福田',
+    centerName: '福田转运中心'
+  }
+];
+export { tableTitleData, tableData };
 ```
-
-如有疑问可在博客下方评论，会及时给予回复的呦。
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

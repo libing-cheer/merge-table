@@ -189,6 +189,12 @@ export default {
         key: key,
         connect: connect
       };
+    },
+    // 查询数据
+    queryData() {
+      // 在工作中，一般是要调接口去查询数据，在查询之前，需要将mergeTabelArr置为空数组，然后在执行之后的操作。
+      this.mergeTabelArr = [];
+      // ...
     }
   }
 };
