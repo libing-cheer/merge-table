@@ -2,21 +2,3 @@
 node_modules/
 dist/
 vue/
-npm-debug.log
-yarn.lock
-yarn-error.log
-package-lock.json
-axios.config.js.orig
-.vscode
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-
-.vs/slnx.sqlite
-.vs/VSWorkspaceState.json
-debug.log

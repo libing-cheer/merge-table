@@ -2,397 +2,88 @@
  * 表头配置
  */
 
-const tableData = [
+const tableTitleData = [
   {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'areaName',
+    label: '片区'
   },
   {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'managementAreaName',
+    label: '管理区'
   },
   {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },{
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '王小虎',
-    address: '上海市普陀区金沙江路 1510 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '李小虎',
-    address: '上海市普陀区金沙江路 1511 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '孙小虎',
-    address: '上海市普陀区金沙江路 1512 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-02',
-    name: '朱小虎',
-    address: '上海市普陀区金沙江路 1513 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-04',
-    name: '钱小虎',
-    address: '上海市普陀区金沙江路 1514 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-01',
-    name: '杜小虎',
-    address: '上海市普陀区金沙江路 1515 弄',
-    age: 18,
-    height: '180cm'
-  },
-  {
-    date: '2016-05-03',
-    name: '赵小虎',
-    address: '上海市普陀区金沙江路 1516 弄',
-    age: 18,
-    height: '180cm'
+    minWidth: '100',
+    prop: 'centerName',
+    label: '中心名称'
   }
 ];
-export { tableData };
+const tableData = [
+  {
+    areaName: '东北',
+    managementAreaName: '黑龙江',
+    centerName: '哈尔滨转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '黑龙江',
+    centerName: '黑龙江转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第一转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第二转运中心'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '大庆',
+    centerName: '大庆第三转运中心'
+  },
+  {
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '上海转运中心'
+  },
+  {
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '上海浦东中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '广东',
+    centerName: '东莞转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '广东',
+    centerName: '东莞转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第一转运中心',
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第二转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '潮汕',
+    centerName: '潮汕第三转运中心'
+  },
+  {
+    areaName: '华南',
+    managementAreaName: '福田',
+    centerName: '福田转运中心'
+  }
+];
+export { tableTitleData, tableData };
