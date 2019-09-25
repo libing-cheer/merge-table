@@ -22,11 +22,6 @@ export default {
   data() {
     return {
       msg: '表格合并',
-      paginationOptions: {
-        currentPage: 1, // 当前页
-        pageSize: 10, // 展示页数
-        pageSizes: [10, 20, 30, 40] // 可选择展示页数 数组
-      },
       tableData,
       tableTitleData
     };
