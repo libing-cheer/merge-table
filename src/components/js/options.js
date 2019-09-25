@@ -11,79 +11,89 @@ const tableTitleData = [
   {
     minWidth: '100',
     prop: 'managementAreaName',
-    label: '管理区'
+    label: '省区'
   },
   {
     minWidth: '100',
     prop: 'centerName',
-    label: '中心名称'
+    label: '市区'
   }
 ];
 const tableData = [
   {
     areaName: '东北',
     managementAreaName: '黑龙江',
-    centerName: '哈尔滨转运中心'
+    centerName: '哈尔滨市'
   },
   {
     areaName: '东北',
     managementAreaName: '黑龙江',
-    centerName: '黑龙江转运中心'
+    centerName: '齐齐哈尔市'
   },
   {
     areaName: '东北',
-    managementAreaName: '大庆',
-    centerName: '大庆第一转运中心'
+    managementAreaName: '黑龙江',
+    centerName: '鹤岗市'
   },
   {
     areaName: '东北',
-    managementAreaName: '大庆',
-    centerName: '大庆第二转运中心'
+    managementAreaName: '黑龙江',
+    centerName: '牡丹江市'
   },
   {
     areaName: '东北',
-    managementAreaName: '大庆',
-    centerName: '大庆第三转运中心'
+    managementAreaName: '黑龙江',
+    centerName: '佳木斯市'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '黑龙江',
+    centerName: '绥化市'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '吉林',
+    centerName: '长春市'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '吉林',
+    centerName: '磐石市'
+  },
+  {
+    areaName: '东北',
+    managementAreaName: '吉林',
+    centerName: '舒兰市'
   },
   {
     areaName: '华东',
     managementAreaName: '上海',
-    centerName: '上海转运中心'
+    centerName: '青浦区'
   },
   {
     areaName: '华东',
     managementAreaName: '上海',
-    centerName: '上海浦东中心'
+    centerName: '徐汇区'
   },
   {
-    areaName: '华南',
-    managementAreaName: '广东',
-    centerName: '东莞转运中心'
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '黄浦区'
   },
   {
-    areaName: '华南',
-    managementAreaName: '广东',
-    centerName: '东莞转运中心'
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '浦东新区'
   },
   {
-    areaName: '华南',
-    managementAreaName: '潮汕',
-    centerName: '潮汕第一转运中心',
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '松江区'
   },
   {
-    areaName: '华南',
-    managementAreaName: '潮汕',
-    centerName: '潮汕第二转运中心'
-  },
-  {
-    areaName: '华南',
-    managementAreaName: '潮汕',
-    centerName: '潮汕第三转运中心'
-  },
-  {
-    areaName: '华南',
-    managementAreaName: '福田',
-    centerName: '福田转运中心'
+    areaName: '华东',
+    managementAreaName: '上海',
+    centerName: '嘉定区'
   }
 ];
 export { tableTitleData, tableData };

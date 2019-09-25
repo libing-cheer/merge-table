@@ -3,7 +3,7 @@
     {{msg}}
     <div>
       <el-table :data="tableData" :span-method="arraySpanMethod" border style="width: 1000px;margin:30px auto;"
-        height="550">
+        height="575">
         <el-table-column v-for="(item, index) in tableTitleData" :key="index" :prop="item.prop" :label="item.label"
           :min-width="item.minWidth">
           <template slot-scope="scope">
